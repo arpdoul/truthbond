@@ -157,7 +157,7 @@ async function loadClaims(){
   const feed=document.getElementById('feed');
   feed.innerHTML='<div class="empty"><span class="spinner"></span> Loading claims from chain...</div>';
   try{
-    const tot=await rpc('gen_call',[{to:CONTRACT,data:JSON.stringify({method:'get_total_claims',args:[]})}, 'latest']);
+    const tot=await rpc('gen_call',[{to:CONTRACT,data:JSON.stringify({method:'get_total_claims',args:[]})}]);
     const total=parseInt(tot)||0;
     document.getElementById('total').textContent=total;
     if(total===0){
@@ -169,7 +169,7 @@ async function loadClaims(){
     let fk=0,rl=0,html='';
     for(let i=total-1;i>=Math.max(0,total-10);i--){
       try{
-        const c=await rpc('gen_call',[{to:CONTRACT,data:JSON.stringify({method:'get_claim',args:[i]})}, 'latest']);
+        const c=await rpc('gen_call',[{to:CONTRACT,data:JSON.stringify({method:'get_claim',args:[i]})}]);
         const p=typeof c==='string'?JSON.parse(c):c;
         const v=p?.verdict||'';
         const s=p?.status||'pending';
